@@ -25,9 +25,9 @@ func main() {
 
 	fmt.Println("Watching files in folder:")
 	for _, f := range files {
-		fmt.Println(" ", f)
+		fmt.Println("  \033[90m○\033[0m", f)
 	}
-	fmt.Println("\nPress Ctrl+C to exit.")
+	fmt.Print("\nPress Ctrl+C to exit.")
 
 	go watch()
 	mux := http.NewServeMux()
@@ -108,7 +108,7 @@ func watch() {
 				t := i.ModTime()
 				if prev, ok := m[p]; ok && t.After(prev) {
 					lastChange = time.Now()
-					fmt.Println("Detected change:", p)
+					fmt.Printf("\r\033[K  \033[33m⚡\033[0m \033[1m%s\033[0m \033[32m✓\033[0m", p)
 				}
 				m[p] = t
 			}
